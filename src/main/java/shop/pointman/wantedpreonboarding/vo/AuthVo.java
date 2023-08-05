@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginVo extends BaseVo{
+public class AuthVo extends BaseVo{
     private String token;
 }

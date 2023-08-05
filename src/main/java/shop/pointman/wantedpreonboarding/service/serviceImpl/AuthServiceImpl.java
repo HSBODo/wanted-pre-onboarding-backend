@@ -1,17 +1,18 @@
 package shop.pointman.wantedpreonboarding.service.serviceImpl;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 import shop.pointman.wantedpreonboarding.domain.Account;
+import shop.pointman.wantedpreonboarding.repository.MemberRepository;
 import shop.pointman.wantedpreonboarding.service.AuthService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import shop.pointman.wantedpreonboarding.service.SecurityService;
+import shop.pointman.wantedpreonboarding.vo.AuthVo;
+
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,8 +20,102 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 public class AuthServiceImpl implements AuthService {
-    @Value("${secret.jwt.key}")
-    private  String SECRET_ENCRYPT;
+
+
+
+    private MemberRepository memberRepository;
+    private SecurityService securityService;
+
+    public AuthServiceImpl(MemberRepository memberRepository, SecurityService securityService) {
+        this.memberRepository = memberRepository;
+        this.securityService = securityService;
+    }
+
+    /**
+     * 회원가입
+     * @param account : 계정
+     * @return authVo : 결과
+     * */
+    @Override
+    public AuthVo join(Account account) throws Exception{
+        AuthVo response = new AuthVo();
+        String email = account.getEmail();
+        String password = account.getPassword();
+
+        boolean isValidationEmail = isValidationEmail(email);
+        if(!isValidationEmail){
+            response.setMsg("이메일 양식이 틀립니다!");
+            response.setCode("02");
+            response.setSuccess(false);
+            return response;
+        }
+
+        boolean isValidationPassword = isValidationPassword(password);
+        if(!isValidationPassword){
+            response.setMsg("비밀번호는 8자 이상을 입력해주세요!!");
+            response.setCode("03");
+            response.setSuccess(false);
+            return response;
+        }
+        boolean join = isJoin(email);
+
+        if(!join){
+            memberRepository.save(account);
+            response.setMsg("회원가입에 성공하였습니다.");
+            response.setCode("00");
+            response.setSuccess(true);
+        }else {
+            response.setMsg("이미 가입된 이메일입니다.");
+            response.setCode("05");
+            response.setSuccess(false);
+        }
+        return response;
+    }
+
+    /**
+     * 로그인
+     * @param account : 계정
+     * @return authVo : 결과
+     * */
+    @Override
+    public AuthVo login(Account account) throws Exception{
+        AuthVo response = new AuthVo();
+        String email = account.getEmail();
+        String password = account.getPassword();
+
+        boolean isValidationEmail = isValidationEmail(email);
+        if(!isValidationEmail){
+            response.setMsg("이메일 양식이 틀립니다!");
+            response.setCode("02");
+            response.setSuccess(false);
+            return response;
+        }
+
+        boolean isValidationPassword = isValidationPassword(password);
+        if(!isValidationPassword){
+            response.setMsg("비밀번호는 8자 이상을 입력해주세요!!");
+            response.setCode("03");
+            response.setSuccess(false);
+            return response;
+        }
+
+
+        boolean isAuth = isAuth(account);
+        if(isAuth){
+            String token = securityService.getJWTToken(account.getEmail());
+            response.setMsg("로그인에 성공하셨습니다.");
+            response.setCode("00");
+            response.setSuccess(true);
+            response.setToken(token);
+        }else {
+            response.setMsg("로그인에 실패하였습니다.");
+            response.setCode("04");
+            response.setSuccess(false);
+
+        }
+        return response;
+    }
+
     /**
      * email 형식 검사
      * @param email : 이메일
@@ -53,52 +148,37 @@ public class AuthServiceImpl implements AuthService {
         return validation;
     }
 
+    /**
+     * 이메일 중복확인
+     * @param email : 계정
+     * @return boolean : 결과
+     * */
     @Override
-    public boolean isJoin(Account account) {
+    public boolean isJoin(String email) {
+        Optional<Account> mayBeAccount = memberRepository.findByAccount(email);
+        if(mayBeAccount.isEmpty()){
+            return false;
+        }
         return true;
     }
     /**
-     * JWT 토큰 발행
-     * @param email : 이메일
-     * @return String : 토큰
+     * email,password 검증
+     * @param account : 계정
+     * @return boolean : 결과
      * */
     @Override
-    public String getJWTToken(String email) {
+    public boolean isAuth(Account account) throws Exception{
 
-
-        Date currentDate = new Date(System.currentTimeMillis());
-        Long expiration = 1000* 60L * 60L * 2L; //유효시간 2시간
-        Date expirationDate = new Date(currentDate.getTime()+ expiration);
-        // Header
-        Map<String, Object> headers = new HashMap<>();
-        headers.put("typ", "JWT");
-        headers.put("alg", "HS256");
-
-        // Payload
-        Map<String, Object> payloads = new HashMap<>();
-        payloads.put("data", email);
-
-        return    Jwts.builder()
-                .setSubject("Login")
-                .setHeader(headers)
-                .setClaims(payloads)
-                .signWith(SignatureAlgorithm.HS256,SECRET_ENCRYPT)
-                .setIssuedAt(currentDate)
-                .setExpiration(expirationDate)
-                .compact();
+        Optional<Account> mayBeAccount = memberRepository.findByAccount(account);
+        if(mayBeAccount.isEmpty()){
+            return false;
+        }
+        return true;
     }
-    /**
-     * 토큰 파싱
-     * @param token : JWT토큰
-     * @return String : 데이터
-     * */
-    @Override
-    public String getDataFromJWTToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_ENCRYPT)
-                .parseClaimsJws(token)
-                .getBody();
-        String data = claims.get("data", String.class);
-        return data;
-    }
+
+
+
+
+
+
 }

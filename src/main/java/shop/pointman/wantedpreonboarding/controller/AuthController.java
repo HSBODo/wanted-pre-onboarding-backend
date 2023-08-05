@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.pointman.wantedpreonboarding.domain.Account;
 import shop.pointman.wantedpreonboarding.service.AuthService;
 import shop.pointman.wantedpreonboarding.vo.BaseVo;
-import shop.pointman.wantedpreonboarding.vo.LoginVo;
+import shop.pointman.wantedpreonboarding.vo.AuthVo;
 
 @Controller
 @RequestMapping(value = "/member/*")
@@ -18,37 +18,12 @@ public class AuthController {
 
     @PostMapping("/join")
     @ResponseBody
-    public BaseVo join(@ModelAttribute Account account){
-        BaseVo response = new BaseVo();
+    public AuthVo join(@ModelAttribute Account account){
+        AuthVo response = new AuthVo();
         try{
-
-            String email = account.getEmail();
-            String password = account.getPassword();
-            String result ="";
-            boolean isValidationEmail = authService.isValidationEmail(email);
-            if(!isValidationEmail){
-                response.setMsg("이메일 양식이 틀립니다!");
-                response.setCode("02");
-                response.setSuccess(false);
-                return response;
-            }
-
-            boolean isValidationPassword = authService.isValidationPassword(password);
-            if(!isValidationPassword){
-                response.setMsg("비밀번호는 8자 이상을 입력해주세요!!");
-                response.setCode("03");
-                response.setSuccess(false);
-                return response;
-            }
-
-            if(isValidationEmail && isValidationPassword){
-                response.setMsg("회원가입에 성공하였습니다.");
-                response.setCode("00");
-                response.setSuccess(true);
-            }
-
+            response = authService.join(account);
         }catch (Exception e){
-            response.setMsg(e.getMessage());
+            response.setMsg("회원가입에 실패하였습니다.");
             response.setCode("01");
             response.setSuccess(false);
             return response;
@@ -58,45 +33,12 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseBody
-    public LoginVo login(@ModelAttribute Account account){
-        LoginVo response = new LoginVo();
+    public AuthVo login(@ModelAttribute Account account){
+        AuthVo response = new AuthVo();
         try{
-            String email = account.getEmail();
-            String password = account.getPassword();
-            String result ="";
-            boolean isValidationEmail = authService.isValidationEmail(email);
-            if(!isValidationEmail){
-                response.setMsg("이메일 양식이 틀립니다!");
-                response.setCode("02");
-                response.setSuccess(false);
-                return response;
-            }
-
-            boolean isValidationPassword = authService.isValidationPassword(password);
-            if(!isValidationPassword){
-                response.setMsg("비밀번호는 8자 이상을 입력해주세요!!");
-                response.setCode("03");
-                response.setSuccess(false);
-                return response;
-            }
-
-
-            boolean isJoin = authService.isJoin(account);
-            if(isJoin){
-                String token = authService.getJWTToken(account.getEmail());
-                response.setMsg("로그인에 성공하셨습니다.");
-                response.setCode("00");
-                response.setSuccess(true);
-                response.setToken(token);
-            }else {
-                response.setMsg("회원이 아닙니다!");
-                response.setCode("04");
-                response.setSuccess(false);
-
-            }
-
+            response = authService.login(account);
         }catch (Exception e){
-            response.setMsg(e.getMessage());
+            response.setMsg("로그인에 실패하였습니다.");
             response.setCode("01");
             response.setSuccess(false);
             return response;
