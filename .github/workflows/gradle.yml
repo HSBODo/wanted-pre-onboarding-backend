@@ -23,7 +23,7 @@ jobs:
     
     # Spring Boot 어플리케이션 Build (1) --exclude-task test(테스트코드 실행 안함)
     - name: Spring Boot Build
-      run: ./gradlew clean build 
+      run: ./gradlew clean build --exclude-task test
     
     # Docker 이미지 Build (2)
     - name: docker image build
