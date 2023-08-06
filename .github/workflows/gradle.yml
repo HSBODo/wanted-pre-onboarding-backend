@@ -21,7 +21,7 @@ jobs:
     
     # Docker 이미지 Build (2)
     - name: docker image build
-      run: docker build -t fxbin7713/spring-chatbot .
+      run: docker build -t fxbin7713/wanted .
     
     # DockerHub Login (3)
     - name: docker login 
@@ -32,7 +32,7 @@ jobs:
 
     # Docker Hub push (4)
     - name: docker Hub push
-      run: docker push fxbin7713/spring-chatbot
+      run: docker push fxbin7713/wanted
 
     # GET GitHub IP (5)
     - name: get GitHub IP
@@ -62,9 +62,9 @@ jobs:
         port: ${{ secrets.EC2_SSH_PORT }}
         timeout: 60s
         script: |
-          sudo docker stop spring-chatbot
-          sudo docker rm spring-chatbot
-          sudo docker run -it -d -p 8080:8080 --name spring-chatbot fxbin7713/spring-chatbot
+          sudo docker stop wanted
+          sudo docker rm wanted
+          sudo docker run -it -d -p 8080:8080 --name wanted fxbin7713/wanted
 
       # REMOVE Github IP FROM security group (9)
     - name: Remove IP FROM security group
