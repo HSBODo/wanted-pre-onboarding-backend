@@ -14,6 +14,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
     
     # Spring Boot 어플리케이션 Build (1) --exclude-task test(테스트코드 실행 안함)
     - name: Spring Boot Build
