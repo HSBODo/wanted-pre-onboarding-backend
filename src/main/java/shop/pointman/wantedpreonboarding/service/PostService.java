@@ -1,15 +1,18 @@
 package shop.pointman.wantedpreonboarding.service;
 
 import shop.pointman.wantedpreonboarding.domain.Post;
+import shop.pointman.wantedpreonboarding.vo.BaseVo;
+import shop.pointman.wantedpreonboarding.vo.PostListVo;
 import shop.pointman.wantedpreonboarding.vo.PostVo;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public interface PostService {
 
     PostVo savePost(Post post) throws Exception;
-    void updatePost(PostVo post);
-    void deletePost(String id,String author);
+    PostVo updatePost(Post post);
+    BaseVo deletePost(Post post);
     PostVo findByPost(Long id) throws Exception;
-    List<PostVo> findByAll();
+    PostListVo findByAll(int page, int limit);
 }

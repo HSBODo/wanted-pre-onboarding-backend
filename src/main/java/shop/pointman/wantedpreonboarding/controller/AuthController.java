@@ -18,7 +18,7 @@ public class AuthController {
 
     @PostMapping("/join")
     @ResponseBody
-    public AuthVo join(@ModelAttribute Account account){
+    public AuthVo join(@RequestBody Account account){
         AuthVo response = new AuthVo();
         try{
             response = authService.join(account);
@@ -33,7 +33,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseBody
-    public AuthVo login(@ModelAttribute Account account){
+    public AuthVo login(@RequestBody Account account){
         AuthVo response = new AuthVo();
         try{
             response = authService.login(account);

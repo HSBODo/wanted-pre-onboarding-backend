@@ -20,10 +20,4 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
-    @Column(name = "delete_date")
-    private LocalDateTime deleteDate;
-
-    @ColumnDefault("'Y'")
-    @Column(name = "is_delete")
-    private String isDelete;
 }
