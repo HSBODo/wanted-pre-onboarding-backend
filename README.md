@@ -16,30 +16,25 @@
 ## DB 테이블 구조
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/1e922090-7f38-4dbd-a7cf-91a060398f32)
 
-
-
-
-
-
 ## API 명세 및 실행방법
   * 실행방법
     * PostMan 사용 (https://www.postman.com/)
-    * 도메인 (www.pointman.shop)
+    * 도메인 www.pointman.shop
     * API명세서에 맞게 PostMan으로 요청
-    * 실행 영상 (https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/28bd03b4-8e50-4f88-84f8-e9b18c7ffe12)
+    * 실행방법 및 데모영상 (https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/28bd03b4-8e50-4f88-84f8-e9b18c7ffe12)
   * API 명세서
     * https://documenter.getpostman.com/view/22940487/2s9XxyRtbx#5c83a693-1a57-45ad-b922-7ace27e7e269
 ### 1. 회원가입
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/a3ee546e-deef-4f37-b608-15c84aa7617c)
 * 이메일 검증은 정규 표현식 사용
 * 비밀번호 검증 조건은 String.length 사용
+* 비밀번호를 암호화 알고리즘 AES/CBC/PKCS5Padding 사용하여 저장
 <br>
 <br>
 <br>
 
 ### 2. 로그인
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/234856a0-5336-4faf-aaa1-2955b42cef4b)
-* 비밀번호 암호화 알고리즘 AES/CBC/PKCS5Padding 사용
 * Cipher클래스를 사용하여 암호화 및 복호화
 * 검증 완료 후 JWT토큰 발행  
 <br>
@@ -48,14 +43,16 @@
 
 ### 3. 게시글 작성
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/bcee0762-dc19-41fa-9a7b-3d348d6cfdb5)
-* 게시글 저장은 JPA를 사용하여 DB에 저장 
+* 게시글 저장은 JPA를 사용하여 DB에 저장
+* 나중에 조회하기위해 게시글 번호(id)를 PK로 저장 
 <br>
 <br>
 <br>
 
 ### 4. 게시글 목록
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/6f38e3b7-73fc-4a42-94ce-d2d01472d207)
-* 동적으로 페이지 처리 
+* 동적으로 페이지 처리
+* mysql limt , offset 사용하여 페이징처리
 * limit 페이지당 글개수
 * page 페이지 번호
 <br>
