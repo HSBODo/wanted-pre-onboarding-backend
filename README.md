@@ -44,7 +44,7 @@
 ### 3. 게시글 작성
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/bcee0762-dc19-41fa-9a7b-3d348d6cfdb5)
 * 게시글 저장은 JPA를 사용하여 DB에 저장
-* 나중에 조회하기위해 게시글 번호(id)를 PK로 저장 
+* 나중에 조회하기위해 게시글 번호(id)를 PK로 저장
 <br>
 <br>
 <br>
@@ -70,6 +70,7 @@
 ### 6. 게시글 수정
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/355ac010-d622-4957-a09f-138d6d707836)
 * 게시글 작성자 검증 후 수정
+* 수정시 수정일 업데이트 
 <br>
 <br>
 <br>
