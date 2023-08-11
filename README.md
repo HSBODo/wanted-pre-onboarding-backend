@@ -18,10 +18,17 @@
 
 
 
+
+
+
 ## API 명세 및 실행방법
   * 실행방법
-    * PostMan을 통하여 API명세와 같이 호출하여 사용  (https://www.postman.com/)
-    * 자세한 API명세는 여기서 확인해 주세요 (https://documenter.getpostman.com/view/22940487/2s9XxyRtbx#5c83a693-1a57-45ad-b922-7ace27e7e269)  
+    * PostMan 사용 (https://www.postman.com/)
+    * 도메인 (www.pointman.shop)
+    * API명세서에 맞게 PostMan으로 요청
+    * 실행 영상 (https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/28bd03b4-8e50-4f88-84f8-e9b18c7ffe12)
+  * API 명세서
+    * https://documenter.getpostman.com/view/22940487/2s9XxyRtbx#5c83a693-1a57-45ad-b922-7ace27e7e269
 ### 1. 회원가입
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/a3ee546e-deef-4f37-b608-15c84aa7617c)
 * 이메일 검증은 정규 표현식 사용
