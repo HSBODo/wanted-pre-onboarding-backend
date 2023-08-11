@@ -3,6 +3,7 @@ package shop.pointman.wantedpreonboarding.service.serviceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,7 @@ class PostServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("게시글 작성")
     void savePost() throws Exception {
         Post post = new Post();
         post.setAuthor("테스트");
@@ -35,6 +37,7 @@ class PostServiceImplTest {
     }
 
     @Test
+    @DisplayName("게시글 조회")
     void findByPost() throws Exception{
         Long postId=252L;
         PostVo result = postService.findByPost(postId);
@@ -44,6 +47,7 @@ class PostServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("게시글 수정")
     void updatePost() {
         Post post = new Post();
         post.setAuthor("테스트");
@@ -58,6 +62,7 @@ class PostServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("게시글 삭제")
     void deletePost() {
         Post post = new Post();
         post.setAuthor("테스트");
@@ -67,6 +72,7 @@ class PostServiceImplTest {
     }
 
     @Test
+    @DisplayName("게시글 전체조회")
     void findByAll() {
         int offset = 0;
         int limit = 10;

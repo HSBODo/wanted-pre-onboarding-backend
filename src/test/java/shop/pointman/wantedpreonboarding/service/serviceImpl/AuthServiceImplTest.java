@@ -3,6 +3,7 @@ package shop.pointman.wantedpreonboarding.service.serviceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +24,10 @@ class AuthServiceImplTest {
     AuthService authService ;
     @Autowired
     SecurityService securityService;
+
     @Test
     @Transactional
+    @DisplayName("회원가입 테스트")
     void join() throws Exception{
         AuthVo result = new AuthVo();
         Account account = new Account();
@@ -35,6 +38,7 @@ class AuthServiceImplTest {
     }
 
     @Test
+    @DisplayName("로그인 테스트")
     void login() throws Exception{
         AuthVo result = new AuthVo();
         Account account = new Account();
@@ -46,6 +50,7 @@ class AuthServiceImplTest {
     }
 
     @Test
+    @DisplayName("이메일 검증 테스트")
     void isValidationEmail() {
         String email = "asdasdasdasdasd@scomasdfgha.3sd";
         boolean result = authService.isValidationEmail(email);
@@ -53,6 +58,7 @@ class AuthServiceImplTest {
     }
 
     @Test
+    @DisplayName("비밀번호 검증 테스트")
     void isValidationPassword() {
         String password = "12345678";
         boolean result = authService.isValidationPassword(password);

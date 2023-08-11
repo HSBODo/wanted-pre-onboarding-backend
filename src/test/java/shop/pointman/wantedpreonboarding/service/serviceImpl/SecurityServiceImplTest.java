@@ -2,6 +2,7 @@ package shop.pointman.wantedpreonboarding.service.serviceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ class SecurityServiceImplTest {
     private SecurityService securityService;
 
     @Test
+    @DisplayName("JWT 토큰 발행 및 복호화 테스트 ")
     void getJWTToken_getDataFromJWTToken() {
         String email = "asdasdasdasdasd@scomasdfgha.3sd";
         String result = securityService.getJWTToken(email);
@@ -26,6 +28,7 @@ class SecurityServiceImplTest {
     }
 
     @Test
+    @DisplayName("비밀번호 암호화 및 복호화 테스트 ")
     void encrypt_decrypt() throws Exception{
         String password = "asdzxczxczxv";
         String encrypt = securityService.encrypt(password);
