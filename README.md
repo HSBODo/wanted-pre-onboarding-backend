@@ -8,11 +8,14 @@
   *  서버: AWS Ec2(WAS,DB)
   *  도메인:https://www.pointman.shop
   *  CI/CD: GitHub Action(docker)
+  *  테스트: Junit4
 ## 아키텍처 구조
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/6813cab8-1004-4b66-968d-4aa32ba244bf)
-
+## CI/CD 배포 과정
+![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/86eb0e6e-f214-4f73-b11f-4b5886ff9637)
 ## DB 테이블 구조
 ![image](https://github.com/HSBODo/wanted-pre-onboarding-backend/assets/86594565/1e922090-7f38-4dbd-a7cf-91a060398f32)
+
 
 
 ## API 명세 및 실행방법
